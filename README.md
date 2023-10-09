@@ -10,7 +10,7 @@ Você pode jogar à vontade no seguinte link:
 
 ## Tecnologias Utilizadas
 
-- Javascipt
+- JavaScript
 - React
 - NodeJs
 - HTML
