@@ -1,23 +1,23 @@
 :root {
-    --O-color: #2196f3;
-    --X-color: #f44336;
-    --E-color: #777;
+  --O-color: #1c70b4;
+  --X-color: #631510;
+  --E-color: goldenrod;
 
-    --green: #4caf50;
+  --green: rgb(14, 80, 55);
 }
 
-#root{
+#root {
   height: 100%;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    height: 100vh;
-    background-color: #eee;
+  font-family: "Pixelify Sans", cursive;
+  height: 100vh;
+  background-color: #eee;
 }

@@ -1,16 +1,13 @@
-import React from 'react';
+import React from "react";
 
 // Importando as rotas
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Importando as páginas da aplicação
-import { Home } from './pages/Home';
-import App from './pages/Game';
-import { SelecaoJogador } from './pages/SelecaoJogadores'
-
+import { Home } from "./pages/Home";
+import { SinglePlayer } from "./pages/SinglePlayer";
+import { Multiplayer } from "./pages/Multiplayer";
+import { SelecaoJogador } from "./pages/SelecaoJogadores";
 
 const router = createBrowserRouter([
   {
@@ -18,17 +15,19 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/game",
-    element: <App />
+    path: "/singleplayer",
+    element: <SinglePlayer />,
+  },
+  {
+    path: "/multiplayer",
+    element: <Multiplayer />,
   },
   {
     path: "/selecao",
-    element: <SelecaoJogador />
-  }
-])
+    element: <SelecaoJogador />,
+  },
+]);
 
 export const Routes = () => {
-  return (
-    <RouterProvider router={router} />
-  )
-}
+  return <RouterProvider router={router} />;
+};
