@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { SinglePlayer } from "./pages/SinglePlayer";
 import { Multiplayer } from "./pages/Multiplayer";
-import { SelecaoJogador } from "./pages/SelecaoJogadores";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +20,6 @@ const router = createBrowserRouter([
   {
     path: "/multiplayer",
     element: <Multiplayer />,
-  },
-  {
-    path: "/selecao",
-    element: <SelecaoJogador />,
   },
 ]);
 
