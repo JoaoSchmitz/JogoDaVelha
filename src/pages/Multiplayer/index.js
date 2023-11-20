@@ -10,26 +10,32 @@ export const Multiplayer = () => {
   const [quadro, setQuadro] = useState(quadroVazio);
   const [jogadorAtual, setJogadorAtual] = useState(jogador1);
   const [vencedor, setVencedor] = useState(null);
-  // const [modal, setModal] = useState(true);
 
+  // Realiza as jogadas
   const handleCelulaClick = (index) => {
+    // Verifica se há um vencedor
     if (vencedor) {
       console.log("Jogo finalizado.");
       return null;
     }
 
+    // Verifica se o local escolhido está vazio
     if (quadro[index] !== "") {
       return null;
     }
 
+    // Realiza a jogada
     quadro[index] = jogadorAtual;
 
+    // Muda o turno e checa se teve um vencedor ou aconteceu um empate
     setJogadorAtual(jogadorAtual === jogador1 ? jogador2 : jogador1);
     checarEmpate();
     checarVencedor();
   };
 
+  // Verifica se tem um vencedor
   const checarVencedor = () => {
+    // Lista todas as possibilidades de vencer
     const possibilidadesDeVencer = [
       [quadro[0], quadro[1], quadro[2]],
       [quadro[3], quadro[4], quadro[5]],
@@ -43,12 +49,15 @@ export const Multiplayer = () => {
       [quadro[2], quadro[4], quadro[6]],
     ];
 
+    // Para cada possibilidade de vencer, verifica se ela ocorreu
     possibilidadesDeVencer.forEach((celulas) => {
+      // Verifica se o jogador1 venceu
       if (celulas.every((celula) => celula === jogador1)) {
         let pontuacao = parseInt(localStorage.getItem("jogador1"));
         setVencedor(jogador1);
         localStorage.setItem("jogador1", pontuacao + 1);
       }
+      // Verifica se o jogador2 venceu
       if (celulas.every((celula) => celula === jogador2)) {
         let pontuacao = parseInt(localStorage.getItem("jogador2"));
         setVencedor(jogador2);
@@ -57,21 +66,25 @@ export const Multiplayer = () => {
     });
   };
 
+  // Pega a pontuação dos jogadores do localStorage
   const pontuacaoJogador1 = parseInt(localStorage.getItem("jogador1"));
   const pontuacaoJogador2 = parseInt(localStorage.getItem("jogador2"));
 
+  // Verifica se houve um empate
   const checarEmpate = () => {
     if (quadro.every((item) => item !== "")) {
       setVencedor("E");
     }
   };
 
+  // Limpa o quadro do jogo e começa novamente
   const resetarJogo = () => {
     setJogadorAtual(jogador1);
     setQuadro(quadroVazio);
     setVencedor(null);
   };
 
+  // Limpa o placar do jogo
   const resetarPlacar = () => {
     setQuadro(quadroVazio);
     setJogadorAtual(jogador1);
@@ -82,36 +95,6 @@ export const Multiplayer = () => {
 
   return (
     <>
-      {/* {modal ? (
-        <>
-          <div className="modalBg" onClick={() => setModal(!modal)} />
-          <div className="modalContent">
-            <form>
-              <input
-                type="text"
-                className="playerX"
-                value={nomeX}
-                onChange={(event) => {
-                  setNomeX(event.target.value);
-                }}
-                placeholder="Player: X"
-              ></input>
-              <input
-                type="text"
-                className="playerO"
-                value={nomeY}
-                onChange={(event) => {
-                  setNomeY(event.target.value);
-                }}
-                placeholder="Player: O"
-              ></input>
-              <button type="submit">Confirmar</button>
-            </form>
-          </div>
-        </>
-      ) : (
-        <></>
-      )} */}
       <section className="container">
         <section className="main">
           <header className="board_cabecalho">

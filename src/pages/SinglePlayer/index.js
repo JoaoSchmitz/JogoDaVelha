@@ -11,29 +11,36 @@ export const SinglePlayer = () => {
   const [jogadorAtual, setJogadorAtual] = useState(jogador2);
   const [vencedor, setVencedor] = useState(null);
 
+   // Realiza as jogadas
   const handleCelulaClick = useCallback(
     (index) => {
+      // Verifica se há um vencedor
       if (vencedor) {
         console.log("Jogo finalizado.");
         return null;
       }
 
+      // Verifica se o local escolhido está vazio
       if (quadro[index] !== "") {
         return null;
       }
 
+      // Realiza a jogada
       const novoQuadro = [...quadro];
       novoQuadro[index] = jogadorAtual;
 
+      // Muda o turno
       setQuadro(novoQuadro);
       setJogadorAtual(jogadorAtual === jogador1 ? jogador2 : jogador1);
     },
     [jogadorAtual, quadro, vencedor]
   );
 
+  // Verifica se tem um vencedor
   const checarVencedor = useCallback(() => {
     let venceu = 0;
 
+    // Lista todas as possibilidades de vencer
     const possibilidadesDeVencer = [
       [quadro[0], quadro[1], quadro[2]],
       [quadro[3], quadro[4], quadro[5]],
@@ -47,13 +54,16 @@ export const SinglePlayer = () => {
       [quadro[2], quadro[4], quadro[6]],
     ];
 
+    // Para cada possibilidade de vencer, verifica se ela ocorreu
     possibilidadesDeVencer.forEach((celulas) => {
+      // Verifica se o jogador1 venceu
       if (celulas.every((celula) => celula === "X")) {
         let pontuacao = parseInt(localStorage.getItem("jogador1"));
         setVencedor("X");
         localStorage.setItem("jogador1", pontuacao + 1);
         venceu = 1;
       }
+      // Verifica se o jogador2 venceu
       if (celulas.every((celula) => celula === "O")) {
         let pontuacao = parseInt(localStorage.getItem("jogador2"));
         setVencedor("O");
@@ -62,6 +72,7 @@ export const SinglePlayer = () => {
       }
     });
 
+    // Retorna 1 se houve um vencedor, 0 se não
     if (venceu === 1) {
       return 1;
     } else {
@@ -69,18 +80,22 @@ export const SinglePlayer = () => {
     }
   }, [quadro]);
 
+  // Verifica se houve um empate
   const checarEmpate = useCallback(() => {
     if (quadro.every((item) => item !== "")) {
       setVencedor("E");
     }
   }, [quadro]);
 
+  // Pega a pontuação dos jogadores do localStorage
   const pontuacaoJogador1 = parseInt(localStorage.getItem("jogador1"));
   const pontuacaoJogador2 = parseInt(localStorage.getItem("jogador2"));
 
+  // Limpa o quadro do jogo e começa novamente
   const resetarJogo = useCallback(() => {
     setQuadro(quadroVazio);
     setJogadorAtual(jogador2);
+    // Verifica se houve vencedor, para evitar erros no placar
     if (vencedor === jogador1)
       localStorage.setItem(
         "jogador1",
@@ -94,6 +109,7 @@ export const SinglePlayer = () => {
     setVencedor(null);
   }, [quadroVazio, vencedor]);
 
+  // Limpa o placar do jogo
   const resetarPlacar = () => {
     setQuadro(quadroVazio);
     setJogadorAtual(jogador2);
@@ -102,18 +118,25 @@ export const SinglePlayer = () => {
     localStorage.setItem("jogador2", 0);
   };
 
+  // Realiza a função:
+  // - sempre que algum item do array de dependências é alterado
+  // - ao carregar a página
   useEffect(() => {
     checarEmpate();
     const venceu = checarVencedor();
+    // Verifica se é a vez do computador e se não há um vencedor
     if (jogadorAtual === jogador2 && !venceu) {
+      // Verifica quais espaços do quadro de jogo estão vazios
       const celulasVazias = quadro
         .map((celula, index) => (celula === "" ? index : null))
         .filter((celula) => celula !== null);
 
+      // Se houver espaçoes vazios no quadro de jogo, o bot joga em um espaço vazio aleatório
       if (celulasVazias.length > 0 && !vencedor) {
         const randomIndex = Math.floor(Math.random() * celulasVazias.length);
         const botMove = celulasVazias[randomIndex];
 
+        // Faz o bot jogar após um período de tempo, para simular o tempo de  decisão
         setTimeout(() => {
           handleCelulaClick(botMove);
         }, 1000);

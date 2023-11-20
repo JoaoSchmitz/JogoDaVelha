@@ -162,26 +162,6 @@ button:hover{
   text-shadow: black 3px 3px;
 }
 
-.modalBg {
-  z-index: 9;
-  background-color: #00000047;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-
-.modalContent {
-  background-color: white;
-  z-index: 999;
-  width: 30vw;
-  height: 30vh;
-  position: fixed;
-  align-self: center;
-  justify-self: center;
-  left: 35vw;
-  top: 35vh;
-}
-
 .mensagem-bot {
   margin-top: 2rem;
   display: flex;
