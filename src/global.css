@@ -8,6 +8,7 @@
 
 #root {
   height: 100%;
+  overflow: hidden;
 }
 
 * {
@@ -17,7 +18,7 @@
 }
 
 body {
-  font-family: "Pixelify Sans", cursive;
+  font-family: serif;
   height: 100vh;
   background-color: #eee;
 }
